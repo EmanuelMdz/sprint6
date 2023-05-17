@@ -4,7 +4,7 @@ import "./Header.css";
 const Header = (props) => {
   return (
     <div className={`div_header ${props.theme}`}>
-      <h1>TODO</h1>
+      <h1>TODO change</h1>
       <div className="boton_day_night">
         <button
           onClick={() => props.setTheme(props.theme === "sun" ? "moon" : "sun")}
