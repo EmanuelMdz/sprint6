@@ -8,6 +8,10 @@
   justify-content: center;
   align-items: center;
 }
+.div_header.moon {
+  background-image: url("/images/bg-desktop-dark.jpg");
+  background-color: hsl(235, 19%, 35%);
+}
 .div_header h1 {
   color: white;
   margin-right: 30%;

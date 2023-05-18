@@ -1,15 +1,15 @@
 import React from "react";
 import "./Header.css";
 
-const Header = (props) => {
+const Header = ({ themeProp, setThemeProp }) => {
   return (
-    <div className={`div_header ${props.theme}`}>
-      <h1>TODO change</h1>
+    <div className={`div_header ${themeProp}`}>
+      <h1>T O D O</h1>
       <div className="boton_day_night">
         <button
-          onClick={() => props.setTheme(props.theme === "sun" ? "moon" : "sun")}
+          onClick={() => setThemeProp(themeProp === "sun" ? "moon" : "sun")}
         >
-          <img src={`/images/icon-${props.theme}.svg`} alt="" />
+          <img src={`/images/icon-${themeProp}.svg`} alt="" />
         </button>
       </div>
     </div>
