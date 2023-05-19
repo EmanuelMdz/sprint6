@@ -40,6 +40,7 @@ export const Main = ({
             icon={<IconCircle size="20px" />}
             placeholder="Create a new to do..."
             onChange={onInputChange}
+            value={input}
           />
         </div>
       </div>
