@@ -1,0 +1,72 @@
+/* --------Input------- */
+.div_input {
+  width: 40%;
+  margin: auto;
+}
+.container_input {
+  position: relative;
+  bottom: 155px;
+}
+.mantine-gszoqu {
+  height: 60px;
+  border-radius: 10px;
+}
+
+/* darkmode */
+.container_input.moon {
+  background-color: black;
+}
+.mantine-gszoqu.moon {
+  background-color: #9394a5;
+}
+
+/* -------Lista-------- */
+ul {
+  padding-right: 30%;
+  padding-left: 30%;
+}
+.conteiner_todolist {
+  position: relative;
+  bottom: 150px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.todo_list {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  list-style: none;
+  background-color: #ffff;
+  color: #9394a5;
+  border-bottom: solid 1px #e4e5f1;
+  padding: 15px;
+  padding-left: 11px;
+  border-radius: 5px;
+}
+
+/* Estilo checkbox */
+.checbox_style {
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  width: 17px;
+  height: 17px;
+  appearance: none;
+  border: 1.8px solid #b4b5b9;
+  border-radius: 10px;
+  margin-right: 8px;
+}
+.checbox_style:checked {
+  background-color: rgb(71, 157, 255);
+}
+/* Ultima lista con acciones */
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+.draganddrop {
+  margin-top: 20px;
+  color: gray;
+  text-decoration: none;
+}

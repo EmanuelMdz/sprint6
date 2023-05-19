@@ -1,18 +1,25 @@
 import React from "react";
 import "./Header.css";
 
-const Header = ({ themeProp, setThemeProp }) => {
+const Header = ({ theme, setTheme }) => {
   return (
-    <div className={`div_header ${themeProp}`}>
-      <h1>T O D O</h1>
-      <div className="boton_day_night">
-        <button
-          onClick={() => setThemeProp(themeProp === "sun" ? "moon" : "sun")}
-        >
-          <img src={`/images/icon-${themeProp}.svg`} alt="" />
-        </button>
+    <>
+      <div className={`div_header ${theme}`}>
+        <h1>TODO</h1>
+        <div className="boton_day_night">
+          {/* ------------Set del theme------------ */}
+          <button onClick={() => setTheme(theme === "sun" ? "moon" : "sun")}>
+            <img src={`/images/icon-${theme}.svg`} alt="" />
+          </button>
+        </div>
+        <div className="p">
+          {" "}
+          <p>
+            Full Stack Developer Bootcamp Coded by<a href="">Angopupyry</a>
+          </p>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 export default Header;
