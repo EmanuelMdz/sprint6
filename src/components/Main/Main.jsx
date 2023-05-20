@@ -56,15 +56,19 @@ export const Main = ({
             );
           })}
           {/* ------------PIE DE LISTA------------ */}
-          <li className="todo_list bottom">
-            <div className="first">Items Left</div>
-            <div className="second">All active Completed</div>
-            <div className="third">Clear Completed</div>
-          </li>
+          {todoList.length >= 1 && (
+            <li className="todo_list bottom">
+              <div className="first">Items Left</div>
+              <div className="second">All active Completed</div>
+              <div className="third">Clear Completed</div>
+            </li>
+          )}
         </ul>
-        <a className="draganddrop" href="">
-          Drag and drop to reorder list
-        </a>
+        {todoList.length >= 1 && (
+          <a className="draganddrop" href="">
+            Drag and drop to reorder list
+          </a>
+        )}
       </div>
     </form>
   );
