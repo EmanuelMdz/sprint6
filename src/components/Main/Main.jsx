@@ -42,7 +42,7 @@ export const Main = ({
           <Input
             className={theme}
             icon={<IconCircle size="20px" />}
-            placeholder="cami xdxd"
+            placeholder="Create a new to do..."
             onChange={onInputChange}
             value={input}
           />
