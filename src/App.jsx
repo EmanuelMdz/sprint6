@@ -17,11 +17,11 @@ function App() {
     theme === "sun"
       ? document.body.classList.remove("moon")
       : document.body.classList.add("moon");
-  }, []);
+  }, [theme]);
 
   return (
     <>
-      <Header theme={theme} setTheme={setTheme} />
+      <Header theme={theme} setTheme={setTheme} todoList={todoList} />
       <Main
         input={input}
         setInput={setInput}

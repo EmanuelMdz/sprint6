@@ -3,13 +3,16 @@
   width: 40%;
   margin: auto;
 }
+.moon > input {
+  background-color: hsl(235, 24%, 19%);
+  border-color: transparent;
+}
 .container_input {
   position: relative;
   bottom: 155px;
 }
 .mantine-gszoqu {
   height: 60px;
-  border-radius: 10px;
 }
 
 /* darkmode */
@@ -44,20 +47,24 @@ ul {
   padding-left: 11px;
   border-radius: 5px;
 }
+.todo_list.moon {
+  background-color: hsl(235, 24%, 19%);
+  border-bottom: solid 0.5px #e4e5f13d;
+}
 
 /* Estilo checkbox */
 .checbox_style {
+  appearance: none;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
   width: 17px;
   height: 17px;
-  appearance: none;
   border: 1.8px solid #b4b5b9;
   border-radius: 10px;
   margin-right: 8px;
 }
 .checbox_style:checked {
-  background-color: rgb(71, 157, 255);
+  background: linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
 }
 /* Ultima lista con acciones */
 .bottom {

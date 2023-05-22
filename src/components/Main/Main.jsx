@@ -17,7 +17,6 @@ export const Main = ({
   }
   const onInputChange = (e) => {
     setInput(e.target.value);
-    console.log(input);
   };
   {
     /* ------------CUANDO ENVIO EL FORM // seteo el array ------------ */
@@ -26,17 +25,22 @@ export const Main = ({
     e.preventDefault();
     setTodoList([
       ...todoList,
-      { id: uuidv4(), text: input, completed: false, position: 0 },
+      {
+        id: uuidv4(),
+        text: input,
+        completed: false,
+        position: todoList.length + 1,
+      },
     ]);
     setInput("");
-    console.log(todoList); //console log del array ?¡
   };
   return (
     // -----------INPUT-------------/*
     <form onSubmit={onInputSumit}>
       <div className={`container_input`}>
-        <div className="div_input">
+        <div className={`div_input`}>
           <Input
+            className={theme}
             icon={<IconCircle size="20px" />}
             placeholder="Create a new to do..."
             onChange={onInputChange}
@@ -49,15 +53,18 @@ export const Main = ({
         <ul>
           {todoList.map((todo, i) => {
             return (
-              <li className="todo_list" key={todo.id}>
-                <input type="checkbox" className="checbox_style" />
+              <li className={`todo_list ${theme}`} key={todo.id}>
+                <label htmlFor="">
+                  <input type="checkbox" className="checbox_style" />
+                  <span></span>
+                </label>
                 {todo.text}
               </li>
             );
           })}
           {/* ------------PIE DE LISTA------------ */}
           {todoList.length >= 1 && (
-            <li className="todo_list bottom">
+            <li className={`todo_list bottom ${theme}`}>
               <div className="first">Items Left</div>
               <div className="second">All active Completed</div>
               <div className="third">Clear Completed</div>

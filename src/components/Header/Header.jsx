@@ -1,7 +1,7 @@
 import React from "react";
 import "./Header.css";
 
-const Header = ({ theme, setTheme }) => {
+const Header = ({ theme, setTheme, todoList }) => {
   return (
     <>
       <div className={`div_header ${theme}`}>
@@ -14,9 +14,11 @@ const Header = ({ theme, setTheme }) => {
         </div>
         <div className="p">
           {" "}
-          <p>
-            Full Stack Developer Bootcamp Coded by<a href="">Angopupyry</a>
-          </p>
+          {todoList.length < 1 && (
+            <p>
+              Full Stack Developer Bootcamp Coded by<a href="">Angopupyry</a>
+            </p>
+          )}
         </div>
       </div>
     </>
