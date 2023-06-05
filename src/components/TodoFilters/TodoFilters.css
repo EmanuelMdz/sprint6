@@ -1,0 +1,31 @@
+.div_bottom {
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+  text-align: center;
+}
+
+.first {
+  cursor: pointer;
+  text-decoration: none;
+  color: #9394a5;
+  font-size: small;
+}
+.second {
+  display: flex;
+  justify-content: space-between;
+  width: 30%;
+  cursor: pointer;
+  text-decoration: none;
+  color: #9394a5;
+  font-size: small;
+}
+.all {
+  color: rgb(85, 109, 217);
+}
+.third {
+  cursor: pointer;
+  text-decoration: none;
+  color: #9394a5;
+  font-size: small;
+}
