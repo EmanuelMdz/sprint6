@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import "./Main.css";
+import { useState } from "react";
 import { Input, px } from "@mantine/core";
 import { IconBrandNexo, IconCircle } from "@tabler/icons-react";
 import { v4 as uuidv4 } from "uuid";
@@ -16,10 +17,14 @@ export const Main = ({
   setCompletedTask,
   filter,
   setFilter,
+  settodoListFiltered,
+  todoListFiltered,
 }) => {
   {
     /* ------------CUANDO CAMBIA EL IMPUT // seteo con el target------------ */
   }
+  // const [todoListFiltered, settodoListFiltered] = useState([]);
+
   const onInputChange = (e) => {
     setInput(e.target.value);
   };
@@ -29,7 +34,7 @@ export const Main = ({
   const onInputSumit = (e) => {
     e.preventDefault();
     if (input != "") {
-      setTodoList([
+      const updatedList = [
         ...todoList,
         {
           id: uuidv4(),
@@ -37,7 +42,9 @@ export const Main = ({
           isCompleted: false,
           position: todoList.length + 1,
         },
-      ]);
+      ];
+      setTodoList(updatedList);
+      settodoListFiltered(updatedList);
       setInput("");
     }
   };
@@ -48,6 +55,7 @@ export const Main = ({
   const deleteTodo = (id) => {
     const newTodos = todoList.filter((todo) => todo.id !== id);
     setTodoList(newTodos);
+    settodoListFiltered(newTodos);
   };
   {
     /* ------------COMPLETAR TAREA ------------ */
@@ -60,6 +68,7 @@ export const Main = ({
     tareas[index] = updatedTarea;
     setTodoList(tareas);
     setCompletedTask(updatedTarea.isCompleted);
+    settodoListFiltered(tareas);
   };
 
   {
@@ -68,21 +77,24 @@ export const Main = ({
   const clearCompleted = () => {
     const tareas = [...todoList];
     const tareasCompletadas = tareas.filter(
-      (tareaCompletada) => tareasCompletada.isCompleted === true
+      (tareaCompletada) => tareaCompletada.isCompleted === false
     );
+    settodoListFiltered(tareasCompletadas);
     setTodoList(tareasCompletadas);
   };
 
-  const FILTER_TYPE = {
-    All: () => {
-      return true;
-    },
-    Active: () => {
-      return (task) => !task.completed;
-    },
-    Completed: () => {
-      return (task) => task.completed;
-    },
+  const All = () => {
+    settodoListFiltered(todoList);
+  };
+  const Active = () => {
+    const ListFiltered = todoList.filter(
+      (tarea) => tarea.isCompleted === false
+    );
+
+    settodoListFiltered(ListFiltered);
+  };
+  const Complete = () => {
+    settodoListFiltered(todoList.filter((tarea) => tarea.isCompleted === true));
   };
 
   return (
@@ -102,7 +114,7 @@ export const Main = ({
       {/* ------------DIBUJO DE LISTA------------ */}
       <div className="conteiner_todolist">
         <ul>
-          {todoList.filter(FILTER_TYPE[filter]).map((todo, index) => {
+          {todoListFiltered.map((todo, index) => {
             return (
               <div key={todo.id}>
                 <li className={`todo_list ${theme}`} key={todo.id}>
@@ -119,7 +131,7 @@ export const Main = ({
                       className={`text ${todo.isCompleted ? "completed" : ""}`}
                     >
                       {" "}
-                      {todo.text} (indice : {index})
+                      {todo.text}
                     </div>
                   </label>
                   <div>
@@ -141,7 +153,12 @@ export const Main = ({
               <TodoFilters
                 todoList={todoList}
                 setTodoList={setTodoList}
+                filter={filter}
                 setFilter={setFilter}
+                All={All}
+                Active={Active}
+                Complete={Complete}
+                clearCompleted={clearCompleted}
               ></TodoFilters>
             </li>
           )}

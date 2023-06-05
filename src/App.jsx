@@ -14,6 +14,7 @@ function App() {
   const [todoList, setTodoList] = useState([]);
   const [completedTask, setCompletedTask] = useState(false);
   const [filter, setFilter] = useState("All");
+  const [todoListFiltered, settodoListFiltered] = useState([]);
   // UseEffect para remover clases
   useEffect(() => {
     theme === "sun"
@@ -35,6 +36,8 @@ function App() {
         setCompletedTask={setCompletedTask}
         filter={filter}
         setFilter={setFilter}
+        todoListFiltered={todoListFiltered}
+        settodoListFiltered={settodoListFiltered}
       ></Main>
     </>
   );
