@@ -5,6 +5,7 @@ import { Input, px } from "@mantine/core";
 import { IconBrandNexo, IconCircle } from "@tabler/icons-react";
 import { v4 as uuidv4 } from "uuid";
 import { TodoFilters } from "../TodoFilters/TodoFilters";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 export const Main = ({
   todoList, // ArrayEntero
@@ -21,15 +22,14 @@ export const Main = ({
   todoListFiltered,
 }) => {
   {
-    /* ------------CUANDO CAMBIA EL IMPUT // seteo con el target------------ */
+    /* --------------------CUANDO CAMBIA EL IMPUT // seteo con el target--------------- */
   }
-  // const [todoListFiltered, settodoListFiltered] = useState([]);
 
   const onInputChange = (e) => {
     setInput(e.target.value);
   };
   {
-    /* ------------CUANDO ENVIO EL FORM // seteo el array ------------ */
+    /* --------------------------CUANDO ENVIO EL FORM // seteo el array ------------------- */
   }
   const onInputSumit = (e) => {
     e.preventDefault();
@@ -50,7 +50,7 @@ export const Main = ({
   };
 
   {
-    /* ------------ELIMINAR TAREA ------------ */
+    /* ---------------------------------ELIMINAR TAREA -------------------------------- */
   }
   const deleteTodo = (id) => {
     const newTodos = todoList.filter((todo) => todo.id !== id);
@@ -58,10 +58,10 @@ export const Main = ({
     settodoListFiltered(newTodos);
   };
   {
-    /* ------------COMPLETAR TAREA ------------ */
+    /* ---------------------------------COMPLETAR TAREA ----------------------------- */
   }
   const completarTareas = (index) => {
-    const tareas = [...todoList];
+    const tareas = [...todoListFiltered];
     const tarea = tareas[index];
     const isCompleted = tarea.isCompleted;
     const updatedTarea = { ...tarea, isCompleted: !isCompleted };
@@ -72,7 +72,7 @@ export const Main = ({
   };
 
   {
-    /* ------------CLEAR  COMPLETE ------------ */
+    /* ---------------------------------CLEAR  COMPLETE ----------------------------- */
   }
   const clearCompleted = () => {
     const tareas = [...todoList];
@@ -83,6 +83,7 @@ export const Main = ({
     setTodoList(tareasCompletadas);
   };
 
+  /*---------------------------------------- FILTROS ---------------------------------- */
   const All = () => {
     settodoListFiltered(todoList);
   };
@@ -96,9 +97,15 @@ export const Main = ({
   const Complete = () => {
     settodoListFiltered(todoList.filter((tarea) => tarea.isCompleted === true));
   };
-
+  /*-------------------------------------------REORDER--------------------------------------- */
+  const reorder = (todoList, startIndex, endIndex) => {
+    const result = [...todoList];
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+  };
   return (
-    // -----------INPUT-------------/*
+    // --------------------------------------------INPUT-------------------------------------/*
     <form onSubmit={onInputSumit}>
       <div className={`container_input`}>
         <div className={`div_input`}>
@@ -111,64 +118,105 @@ export const Main = ({
           />
         </div>
       </div>
-      {/* ------------DIBUJO DE LISTA------------ */}
-      <div className="conteiner_todolist">
-        <ul>
-          {todoListFiltered.map((todo, index) => {
-            return (
-              <div key={todo.id}>
-                <li className={`todo_list ${theme}`} key={todo.id}>
-                  <label htmlFor="">
-                    <input
-                      type="checkbox"
-                      checked={todo.isCompleted}
-                      onChange={() => {
-                        completarTareas(index);
-                      }}
-                      className="checbox_style"
-                    />
-                    <div
-                      className={`text ${todo.isCompleted ? "completed" : ""}`}
-                    >
-                      {" "}
-                      {todo.text}
+      {/* -------------------------------------------DIBUJO DE LISTA---------------------- */}
+      <DragDropContext
+        onDragEnd={(result) => {
+          const { source, destination } = result;
+          if (!destination) {
+            return;
+          }
+          if (
+            source.index === destination.index &&
+            source.droppableId === destination.droppableId
+          ) {
+            return;
+          }
+          settodoListFiltered((prevTask) =>
+            reorder(prevTask, source.index, destination.index)
+          );
+        }}
+      >
+        <div className="conteiner_todolist">
+          <Droppable droppableId="task">
+            {(droppableProvided) => (
+              <ul
+                {...droppableProvided.droppableProps}
+                ref={droppableProvided.innerRef}
+              >
+                {todoListFiltered.map((todo, index) => {
+                  return (
+                    <div key={todo.id}>
+                      <Draggable
+                        key={todo.id}
+                        draggableId={todo.id}
+                        index={index}
+                      >
+                        {(draggableProvided) => (
+                          <li
+                            {...draggableProvided.draggableProps}
+                            ref={draggableProvided.innerRef}
+                            {...draggableProvided.dragHandleProps}
+                            className={`todo_list ${theme}`}
+                          >
+                            <label htmlFor="">
+                              <input
+                                type="checkbox"
+                                checked={todo.isCompleted}
+                                onChange={() => {
+                                  completarTareas(index);
+                                }}
+                                className="checbox_style"
+                              />
+                              <div
+                                className={`text ${
+                                  todo.isCompleted ? "completed" : ""
+                                }`}
+                              >
+                                {" "}
+                                {todo.text}
+                              </div>
+                            </label>
+                            <div>
+                              <button
+                                type="button"
+                                className="button_delete"
+                                onClick={() => deleteTodo(todo.id)}
+                              >
+                                x
+                              </button>
+                            </div>
+                          </li>
+                        )}
+                      </Draggable>
                     </div>
-                  </label>
-                  <div>
-                    <button
-                      type="button"
-                      className="button_delete"
-                      onClick={() => deleteTodo(todo.id)}
-                    >
-                      x
-                    </button>
-                  </div>
-                </li>
-              </div>
-            );
-          })}
-          {/* ------------PIE DE LISTA------------ */}
+                  );
+                })}
+                {/* ------------PIE DE LISTA------------ */}
+                {todoList.length >= 1 && (
+                  <li className={`todo_list bottom ${theme}`}>
+                    <TodoFilters
+                      todoList={todoList}
+                      setTodoList={setTodoList}
+                      filter={filter}
+                      setFilter={setFilter}
+                      All={All}
+                      Active={Active}
+                      Complete={Complete}
+                      clearCompleted={clearCompleted}
+                    ></TodoFilters>
+                  </li>
+                )}
+                {droppableProvided.placeholder}
+              </ul>
+            )}
+          </Droppable>
           {todoList.length >= 1 && (
-            <li className={`todo_list bottom ${theme}`}>
-              <TodoFilters
-                todoList={todoList}
-                setTodoList={setTodoList}
-                filter={filter}
-                setFilter={setFilter}
-                All={All}
-                Active={Active}
-                Complete={Complete}
-                clearCompleted={clearCompleted}
-              ></TodoFilters>
-            </li>
+            <a className="draganddrop" href="">
+              Drag and drop to reorder list
+            </a>
           )}
-        </ul>
-        {todoList.length >= 1 && (
-          <a className="draganddrop" href="">
-            Drag and drop to reorder list
-          </a>
-        )}
-      </div>
+        </div>
+      </DragDropContext>
     </form>
   );
 };
