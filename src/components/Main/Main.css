@@ -100,3 +100,36 @@ ul {
   border-style: none;
   color: #b4b5b9;
 }
+/* ------querys--------- */
+
+@media (max-width: 860px) {
+  ul {
+    padding: 4%;
+  }
+  .mantine-1v7s5f8 {
+    width: 100%;
+  }
+  .mantine-gszoqu {
+    width: 100%;
+  }
+  .div_input {
+    width: 92%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .div_bottom {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 453px) {
+  .second {
+    justify-content: center !important;
+    flex-wrap: wrap;
+  }
+  .div_bottom {
+    justify-content: space-around;
+  }
+}
