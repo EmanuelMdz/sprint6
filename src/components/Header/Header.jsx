@@ -16,7 +16,8 @@ const Header = ({ theme, setTheme, todoList }) => {
           {" "}
           {todoList.length < 1 && (
             <p>
-              Full Stack Developer Bootcamp Coded by<a href="">Angopupyry</a>
+              Full Stack Developer Bootcamp Coded by
+              <a href="">Emanuel Mendoza</a>
             </p>
           )}
         </div>
